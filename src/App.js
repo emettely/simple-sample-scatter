@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './App.css';
-import Chart from './components/chart';
+
+// import Chart from './components/chart';
 import URLForm from './components/urlform';
 import Button from './components/button';
 import styled from '@emotion/styled'
@@ -22,29 +24,15 @@ class App extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   fetch(API_URL)
-  //     .then(response => {
-  //       if (response.ok) {
-  //         return response.json()
-  //       } else {
-  //         throw new Error('something went wrong')
-  //       }
-  //     })
-  //     .then(response => this.setState({
-  //       results: response.results.filter((r) => {
-  //         return r.name === 'JavaScript';
-  //       })
-  //     }))
-  // }
-
   handlerButtonClick = (event) => { // retains this unlike of lifecycle API DONT NEED BIND?!
     alert('Downloading data set');
     event.preventDefault();
   }
 
   handlerURLSubmit = (event) => {
-    alert('Loaded URL: ' + this.state.value);
+    // alert('Loaded URL: ' + this.state.value);
+    axios.get("localhost:5000?url=" + this.state.value)
+    .then(response => alert(response))
     event.preventDefault();
   }
 
@@ -55,7 +43,7 @@ class App extends Component {
 
     <Heading>Simple-Sample-Scatter!</Heading>
       <URLForm default={API_URL} onSubmit={this.handlerURLSubmit} />
-      <Chart data = { results } />
+      {/* <Chart data = { results } /> */}
       <Button
         onClick={this.handlerButtonClick}
       />
