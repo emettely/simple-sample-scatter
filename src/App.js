@@ -43,7 +43,7 @@ class App extends Component {
 
     <Heading>Simple-Sample-Scatter!</Heading>
       <URLForm default={API_URL} onSubmit={this.handlerURLSubmit} />
-      {/* <Chart data = { results } /> */}
+      
       <Button
         onClick={this.handlerButtonClick}
       />
