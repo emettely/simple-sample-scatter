@@ -5,22 +5,29 @@ import './App.css';
 // import Chart from './components/chart';
 import URLForm from './components/urlform';
 import Button from './components/button';
+import Table from './components/table';
 import styled from '@emotion/styled'
+
 
 const API_URL = "https://nataliia-radina.github.io/react-vis-example/";
 const AppWrapper = styled.div`
-padding: 32px;
-border-radius: 4px;
+  padding: 10px;
+  border-radius: 4px;
+  align: center;
+  margin: auto;
+  width: 50%;
 `
-
 const Heading = styled.header`
 font-size: 32px;
 `
+
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       results: [],
+      categories: '',
+      url: API_URL
     };
   }
 
@@ -29,21 +36,29 @@ class App extends Component {
     event.preventDefault();
   }
 
+  handlerURLChange = (event) => {
+    this.setState({url: event.target.value});
+  }
+
   handlerURLSubmit = (event) => {
-    // alert('Loaded URL: ' + this.state.value);
-    axios.get("localhost:5000?url=" + this.state.value)
-    .then(response => alert(response))
-    event.preventDefault();
+    axios.get("http://127.0.0.1:5000?url=" + this.state.url, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      }
+    })
+      .then(response => {
+        this.setState({categories: response.data})
+      })
+    event.preventDefault();  // prevents reloading
   }
 
   render() {
-    const { results } = this.state;
     return (
     <AppWrapper>
 
-    <Heading>Simple-Sample-Scatter!</Heading>
-      <URLForm default={API_URL} onSubmit={this.handlerURLSubmit} />
-      
+    <Heading>BeetleJuice</Heading>
+      <URLForm default={this.state.url} onSubmit={this.handlerURLSubmit} onChange={this.handlerURLChange}/>
+      <Table categories={this.state.categories} />
       <Button
         onClick={this.handlerButtonClick}
       />

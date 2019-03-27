@@ -9,11 +9,6 @@ class URLForm extends Component {
   constructor(props) {
     super(props);
     this.state = {value: props.default};
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
   }
 
   render() {
@@ -21,7 +16,7 @@ class URLForm extends Component {
       <Form onSubmit={this.props.onSubmit}>
         <label>
           URL:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
+          <input type="text" value={this.state.value} onChange={this.props.onChange} />
         </label>
         <input type="submit" value="Submit" />
       </Form>
